@@ -16,7 +16,7 @@ class Actor {
 	String nombreCompleto
 	
 	@Property("born")
-	int anioNacimiento
+	Integer anioNacimiento
 	
 	override toString() {
 		nombreCompleto

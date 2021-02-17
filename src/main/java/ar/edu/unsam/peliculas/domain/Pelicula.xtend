@@ -27,7 +27,7 @@ class Pelicula {
 	String frase
 	
 	@Property("released")
-	int anio
+	Integer anio
 	
 	@Relationship(type = "ACTED_IN", direction = Direction.INCOMING)
 	List<Personaje> personajes = new ArrayList<Personaje>

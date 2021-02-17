@@ -15,4 +15,6 @@ interface PeliculasRepository extends Repository<Pelicula, Long>  {
 	@Query("MATCH (pelicula:Movie)<-[actuo_en:ACTED_IN]-(persona:Person) WHERE ID(pelicula) = $id RETURN pelicula, collect(actuo_en), collect(persona) LIMIT 1")
 	def Pelicula pelicula(Long id)
 	
+  @Query("MATCH (pelicula:Movie) WHERE id(pelicula) = $pelicula.id SET pelicula.titulo = $pelicula.titulo RETURN pelicula")
+	def Pelicula updatePelicula(Pelicula pelicula)
 }
