@@ -1,6 +1,6 @@
 # Ejemplo Películas con Springboot y Neo4J
 
-[![Build Status](https://travis-ci.com/uqbar-project/eg-peliculas-springboot-neo4j.svg?branch=master)](https://travis-ci.com/uqbar-project/eg-peliculas-springboot-neo4j)
+[![Build Status](https://www.travis-ci.com/uqbar-project/eg-peliculas-springboot-neo4j.svg?token=sgTrpz74HU8UubV6ofCw&branch=master)](https://www.travis-ci.com/uqbar-project/eg-peliculas-springboot-neo4j)
 
 ## Objetivo
 
