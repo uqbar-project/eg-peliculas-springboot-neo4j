@@ -65,12 +65,12 @@ class PeliculaRepositoryTest {
 	}
 
 	@Test
-	@DisplayName("la búsqueda de una película trae los datos de la película y sus perosonajes")
+	@DisplayName("la búsqueda de una película trae los datos de la película y sus personajes")
 	def void testPeliculaConcreta() {
 		val pelicula = peliculasRepository.pelicula(nueveReinas.id)
 		assertEquals("Nueve reinas", pelicula.titulo)
 		assertEquals(2, pelicula.personajes.size)
-		val darin = pelicula.personajes.head
+		val darin = pelicula.personajes.findFirst [ actor.nombreCompleto.equalsIgnoreCase("Ricardo Darín")]
 		assertEquals("Marcos", darin.roles.head)
 	}
 

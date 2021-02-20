@@ -159,14 +159,15 @@ Elegimos hacer tests de integración sobre el repositorio, podríamos a futuro i
 	}
 
 	@Test
-	@DisplayName("la búsqueda de una película trae los datos de la película y sus perosonajes")
+	@DisplayName("la búsqueda de una película trae los datos de la película y sus personajes")
 	def void testPeliculaConcreta() {
 		val pelicula = peliculasRepository.pelicula(nueveReinas.id)
 		assertEquals("Nueve reinas", pelicula.titulo)
 		assertEquals(2, pelicula.personajes.size)
-		val darin = pelicula.personajes.head
+		val darin = pelicula.personajes.findFirst [ actor.nombreCompleto.equalsIgnoreCase("Ricardo Darín")]
 		assertEquals("Marcos", darin.roles.head)
 	}
+
 ```
 
 Para profundizar más en el tema recomendamos leer [esta página](https://medium.com/neo4j/testing-your-neo4j-based-java-application-34bef487cc3c)
