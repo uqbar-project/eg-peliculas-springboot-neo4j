@@ -40,8 +40,6 @@ class Pelicula {
 		val personaje = new Personaje() => [
 					roles = #[_roles]
 					actor = _actor
-					// ya no necesitamos relacionar ambos nodos
-					// pelicula = this
 				]
 		personaje.validar
 		personajes.add(personaje)
@@ -49,8 +47,6 @@ class Pelicula {
 	
 	def eliminarPersonaje(Personaje personaje) {
 		personajes.remove(personaje)
-		// eliminamos la relación bidireccional
-		// personaje.pelicula = null
 	}
 	
 	def void validar() {
