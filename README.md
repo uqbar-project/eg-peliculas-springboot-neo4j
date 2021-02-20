@@ -141,3 +141,32 @@ Para profundizar más recomendamos ver los otros objetos de dominio en este ejem
 ## Sobre los identificadores
 
 Por motivos didácticos hemos mantenido un ID Long que es el que genera Neo4J para sus nodos, aunque [**no resulta una buena estrategia**](https://stackoverflow.com/questions/27336536/reuse-of-deleted-nodes-ids-in-neo4j), ya que cuando eliminamos nodos, Neo4j reutiliza esos identificadores para los nodos nuevos. Recomendamos investigar mecanismos alternativos para generar claves primarias, o bien tener como estrategia el borrado lógico y no físico.
+
+## Tests de integración
+
+Elegimos hacer tests de integración sobre el repositorio, podríamos a futuro incluir al controller, pero dado que no tiene demasiada lógica por el momento estamos bien manteniendo tests más simples. Los casos de prueba que vamos a desarrollar son:
+
+- la búsqueda de películas, donde validaremos que se puede encontrar por "título contiene" sin distinguir mayúsculas o minúsculas y que además no trae los personajes
+- la búsqueda puntual de una película que debe traer los personajes. La forma de buscar por id requiere que luego de enviar el mensaje `save` guardemos el nuevo estado de la película persistida, que tiene el identificador que el container de SDN (Spring Data Neo4J) le dio.
+
+```xtend
+	@Test
+	@DisplayName("la búsqueda por título funciona correctamente")
+	def void testPeliculasPorTitulo() {
+		val peliculas = peliculasRepository.peliculasPorTitulo('''(?i).*nueve.*''')
+		assertEquals(1, peliculas.size)
+		assertEquals(#[], peliculas.head.personajes)
+	}
+
+	@Test
+	@DisplayName("la búsqueda de una película trae los datos de la película y sus perosonajes")
+	def void testPeliculaConcreta() {
+		val pelicula = peliculasRepository.pelicula(nueveReinas.id)
+		assertEquals("Nueve reinas", pelicula.titulo)
+		assertEquals(2, pelicula.personajes.size)
+		val darin = pelicula.personajes.head
+		assertEquals("Marcos", darin.roles.head)
+	}
+```
+
+Para profundizar más en el tema recomendamos leer [esta página](https://medium.com/neo4j/testing-your-neo4j-based-java-application-34bef487cc3c)
