@@ -6,7 +6,7 @@ services:
   - neo4j
 
 before_script:
-  - curl -vX POST http://neo4j:neo4j@localhost:7474/user/neo4j/password -d"password=laura"
+  - curl -vX POST http://neo4j:@localhost:7474/user/neo4j/password -d"password=laura"
 
 script:
   - mvn -e -DTRAVIS_JOB_ID=$TRAVIS_JOB_ID clean install
