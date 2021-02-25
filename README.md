@@ -171,3 +171,11 @@ Elegimos hacer tests de integración sobre el repositorio, podríamos a futuro i
 ```
 
 Para profundizar más en el tema recomendamos leer [esta página](https://medium.com/neo4j/testing-your-neo4j-based-java-application-34bef487cc3c)
+
+## Open API / Swagger
+
+Como de costumbre, pueden investigar los endpoints en el navegador mediante la siguiente URL:
+
+```url
+http://localhost:8080/swagger-ui/index.html#
+```
