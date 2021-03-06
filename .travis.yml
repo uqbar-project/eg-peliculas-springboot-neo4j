@@ -7,5 +7,5 @@ services:
 
 script:
   - sudo systemctl status neo4j
-  - journalctl -u neo4j
+  - sudo journalctl -u neo4j
   - mvn -e -DTRAVIS_JOB_ID=$TRAVIS_JOB_ID clean install
