@@ -6,4 +6,7 @@ services:
   - neo4j
 
 script:
+  - cat /etc/neo4j/neo4j.conf
+  - sudo service neo4j start
+  - sleep 30
   - mvn -e -DTRAVIS_JOB_ID=$TRAVIS_JOB_ID clean install
