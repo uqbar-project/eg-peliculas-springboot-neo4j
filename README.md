@@ -17,13 +17,17 @@ El ejemplo Movies que viene con Neo4j propone
 
 Instalar previamente Neo4j o bien levantar una imagen de Docker
 
-```bash
+<!-- ```bash
 Instalar la última versión de Neo4j con Docker
 docker pull neo4j:4.2.3
 docker run \
      --publish=7474:7474 --publish=7687:7687 \
      --volume=$HOME/neo4j/data:/data \
      neo4j:4.2.3
+``` -->
+
+```bash
+docker run -p7474:7474 -p7687:7687 -e NEO4J_AUTH=neo4j/s3cr3t neo4j
 ```
 
 - Abrir el Navegador de Neo4J Desktop o bien ingresar manualmente a la URL: http://localhost:7474
