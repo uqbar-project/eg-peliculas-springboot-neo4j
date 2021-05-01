@@ -1,6 +1,6 @@
 package ar.edu.unsam.peliculas.controller
 
-import ar.edu.unsam.peliculas.dao.ActoresRepository
+import ar.edu.unsam.peliculas.service.ActorService
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RestController
 class ActorController {
 
 	@Autowired
-	ActoresRepository actoresRepository
-
+	ActorService actorService
+	
 	@GetMapping("/actores/{filtroBusqueda}")
 	@ApiOperation("Devuelve una lista de actores cuyo nombre esté contenido en un valor de búsqueda, sin distinguir mayúsculas de minúsculas. Si por ejemplo se busca 'IT', puede devolver actores como 'Brad Pitt'.")
 	def getActores(@PathVariable String filtroBusqueda) {
-		val nombreABuscar = '''(?i).*«filtroBusqueda».*'''
-		actoresRepository.actores(nombreABuscar)
+		actorService.buscarActores(filtroBusqueda)
 	}
 
 }
