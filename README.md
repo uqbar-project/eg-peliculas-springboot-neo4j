@@ -55,9 +55,9 @@ logging:
 
 Algunas consideraciones:
 
-- la contraseña por defecto cuando instalás Neo4J es **neo4j** pero a veces te obliga a cambiarla, acordate de cambiarla para conectarte correctamente
-- el puerto por defecto para el protocolo bolt es 7687, igualmente eso se puede cambiar
-- por defecto la aplicación hace un log bastante exhaustivo de conexiones y queries a la base, se puede desactivar subiendo el nivel a INFO, WARN o directamente borrando la línea
+- la contraseña por defecto cuando instalás localmente Neo4J es **neo4j** pero a veces te obliga a cambiarla, acordate de sincronizar con esta configuración (de hecho en el ejemplo de Docker estamos usando s3cr3t)
+- el puerto por defecto para el protocolo bolt es 7687
+- respecto al logging, le pusimos una configuración bastante exhaustiva: vas a ver conexiones y queries a la base. Se puede desactivar subiendo el nivel a INFO, WARN o directamente borrando la línea
 
 ## Las consultas
 
@@ -76,17 +76,26 @@ La interfaz _Neo4jRepository_ de Spring boot nos permite declarativamente establ
 	def List<Pelicula> peliculasPorTitulo(String titulo)
 ```
 
-`$titulo` es la nueva forma de asociar el valor del parámetro `titulo` (hay que respetar los mismos nombres). Dado que queremos armar la expresión _contiene_, esto debemos hacerlo antes de llamar al repositorio, en este caso es el Controller (aunque a futuro podríamos pensar en tener un `@Service` que cumpla este rol):
+`$titulo` es la nueva forma de asociar el valor del parámetro `titulo` (hay que respetar los mismos nombres). Dado que queremos armar la expresión _contiene_, esto debemos hacerlo antes de llamar al repositorio, en este caso es el Service):
 
 ```xtend
-	@GetMapping("/peliculas/{titulo}")
-	def getPeliculasPorTitulo(@PathVariable String titulo) {
-		val tituloABuscar = '''(?i).*«titulo».*'''
-		peliculasRepository.peliculasPorTitulo(tituloABuscar)
+def buscarPorTitulo(String titulo) {
+	peliculasRepository.peliculasPorTitulo(titulo.contiene)
+}
+```
+
+`contiene` es en realidad un _extension method_ definido en el archivo CipherUtils:
+
+```xtend
+class CipherUtils {
+	static def contiene(String valor) {
+		'''(?i).*«valor».*'''.toString
 	}
+}
 ```
 
 En este caso solo queremos traer el nodo película, sin sus relaciones, por lo que el endpoint devuelve una lista de personajes vacía. Esto mejora la performance de la consulta aunque hay que exponer esta decisión a quien consuma nuestra API.
+
 ### Ver los datos de una película concreta
 
 Cuando nos pasen un identificador de una película concreta, ahora sí queremos traer los datos de la película, más sus personajes y eso incluye los datos de cada uno de sus actores:
